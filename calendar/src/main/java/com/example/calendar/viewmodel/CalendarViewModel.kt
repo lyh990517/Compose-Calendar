@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-
 class CalendarViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<CalendarState>(CalendarState.Loading)
     val uiState get() = _uiState.asStateFlow()
@@ -21,5 +20,4 @@ class CalendarViewModel : ViewModel() {
     fun loadCalendar(pageCount: Int) = viewModelScope.launch(Dispatchers.defaultDispatcher) {
         _uiState.value = CalendarState.Success(CalendarUtil.makeCalenderPage(pageCount))
     }
-
 }
