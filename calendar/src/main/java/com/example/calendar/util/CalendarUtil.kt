@@ -12,9 +12,7 @@ import java.util.Calendar
 import java.util.Locale
 
 object CalendarUtil {
-
     private val calendar = Calendar.getInstance()
-
     val currentYear = calendar.get(Calendar.YEAR)
     val currentMonth = calendar.get(Calendar.MONTH) + 1
     val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
@@ -26,7 +24,6 @@ object CalendarUtil {
         val adjustedMonth = if (totalMonth % 12 == 0) 12 else totalMonth % 12
         CalendarPage(adjustedYear, adjustedMonth, makeMonth(adjustedYear, adjustedMonth))
     }
-
 
     fun makeMonth(year: Int, month: Int): List<List<Date?>> {
         val daysList = MutableList(5) { MutableList<Date?>(7) { null } }
@@ -150,5 +147,4 @@ object CalendarUtil {
 
         return dates
     }
-
 }
