@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-
 class HorizontalCalendarViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<HorizontalCalendarState>(HorizontalCalendarState.Loading)
     val uiState get() = _uiState.asStateFlow()
@@ -21,6 +20,4 @@ class HorizontalCalendarViewModel : ViewModel() {
     fun loadHorizontalCalendar(year: Int) = viewModelScope.launch(Dispatchers.defaultDispatcher) {
         _uiState.value = HorizontalCalendarState.Success(CalendarUtil.makeYear(year))
     }
-
-
 }
