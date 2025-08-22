@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.calendar.CalendarState
+import com.example.calendar.LocalCalendarState
 
 @Composable
 internal fun Month(
-    calendarState: CalendarState,
     modifier: Modifier = Modifier,
 ) {
+    val calendarState = LocalCalendarState.current
     val month = calendarState.value
 
     Column(
@@ -21,7 +21,6 @@ internal fun Month(
         month.weeks.forEach { week ->
             Week(
                 week = week,
-                onSelect = calendarState::onSelect,
                 modifier = Modifier.fillMaxWidth()
             )
         }

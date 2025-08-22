@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.calendar.CalendarState
+import com.example.calendar.LocalCalendarState
 
 /**
  * To ensure that the state is read only from the corresponding Composable, I extracted the Text into the corresponding Composable function.
@@ -17,9 +17,10 @@ import com.example.calendar.CalendarState
 
 @Composable
 fun DisplayedDate(
-    calendarState: CalendarState,
     modifier: Modifier = Modifier
 ) {
+    val calendarState = LocalCalendarState.current
+
     Text(
         modifier = modifier,
         text = calendarState.displayedDateText,

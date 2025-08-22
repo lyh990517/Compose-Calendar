@@ -9,15 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.example.calendar.LocalCalendarState
 import com.example.calendar.model.Week
-import java.time.LocalDate
 
 @Composable
 internal fun Week(
     week: Week,
-    onSelect: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val calendarState = LocalCalendarState.current
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -28,7 +29,7 @@ internal fun Week(
                 modifier = Modifier
                     .size(32.dp)
                     .clip(CircleShape)
-                    .clickable { onSelect(day.date) }
+                    .clickable { calendarState.onSelect(day.date) }
             )
         }
     }
