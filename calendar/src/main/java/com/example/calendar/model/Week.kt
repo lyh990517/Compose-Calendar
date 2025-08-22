@@ -7,8 +7,8 @@ data class Week(
 ) {
     companion object {
         fun create(
-            daysInWeek: Int,
             currentDate: LocalDate,
+            daysInWeek: Int,
             rowIndex: Int,
         ): Week = Week(
             days = List(daysInWeek) { columnIndex ->
