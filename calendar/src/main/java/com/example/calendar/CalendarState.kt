@@ -7,9 +7,7 @@ import androidx.compose.runtime.remember
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.TextStyle
 import java.time.temporal.TemporalAdjusters
-import java.util.Locale
 
 private const val WEEKS_IN_MONTH = 5
 private const val DAYS_IN_WEEK = 7
@@ -21,7 +19,6 @@ class CalendarState {
         @Composable get() = produceState(CalendarStateData()) {
             value = CalendarStateData(
                 calendar = CalendarPageGenerator.generate(DEFAULT_PAGE_COUNT),
-                dateIndex = DateIndex.none()
             )
         }
 
@@ -32,60 +29,45 @@ class CalendarState {
 }
 
 data class CalendarStateData(
-    val calendar: List<CalendarPage> = emptyList(),
-    val dateIndex: DateIndex = DateIndex.none()
+    val calendar: List<Month> = emptyList()
 )
 
-data class CalendarPage(
-    val year: Int,
-    val month: Int,
-    val days: List<List<CalendarDate?>>
+data class Month(
+    val weeks: List<Week>
+)
+
+data class Week(
+    val days: List<LocalDate>
 )
 
 object CalendarPageGenerator {
-    fun generate(pageCount: Int): List<CalendarPage> {
+    fun generate(pageCount: Int): List<Month> {
         val currentDate = LocalDate.now()
         return List(pageCount) { pageIndex ->
             val targetDate = currentDate.plusMonths(pageIndex.toLong())
-            CalendarPage(
-                year = targetDate.year,
-                month = targetDate.monthValue,
-                days = MonthGenerator.createMonth(targetDate.year, targetDate.monthValue)
+            Month(
+                weeks = MonthGenerator.createMonth(targetDate.year, targetDate.monthValue)
             )
         }
     }
 }
 
 object MonthGenerator {
-    fun createMonth(year: Int, month: Int): List<List<CalendarDate?>> {
-        val monthGrid = createEmptyGrid()
+    fun createMonth(year: Int, month: Int): List<Week> {
         val firstDayOfMonth = YearMonth.of(year, month).atDay(1)
         val startOfWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
 
-        fillMonthGrid(monthGrid, startOfWeek, month)
-        return monthGrid
-    }
-
-    private fun createEmptyGrid(): MutableList<MutableList<CalendarDate?>> {
-        return MutableList(WEEKS_IN_MONTH) {
-            MutableList(DAYS_IN_WEEK) { null }
-        }
-    }
-
-    private fun fillMonthGrid(
-        grid: MutableList<MutableList<CalendarDate?>>,
-        startDate: LocalDate,
-        targetMonth: Int
-    ) {
-        var currentDate = startDate
-
-        for (week in 0 until WEEKS_IN_MONTH) {
-            for (day in 0 until DAYS_IN_WEEK) {
-                if (shouldIncludeDate(currentDate, targetMonth)) {
-                    grid[week][day] = currentDate.toCalendarDate()
+        return List(WEEKS_IN_MONTH) { week ->
+            Week(
+                days = List(DAYS_IN_WEEK) { day ->
+                    val currentDate = startOfWeek.plusDays((week * DAYS_IN_WEEK + day).toLong())
+                    if (shouldIncludeDate(currentDate, month)) {
+                        currentDate
+                    } else {
+                        LocalDate.of(1970, 1, 1) // placeholder for empty days
+                    }
                 }
-                currentDate = currentDate.plusDays(1)
-            }
+            )
         }
     }
 
@@ -97,38 +79,5 @@ object MonthGenerator {
             1 -> targetMonth == 12
             else -> false
         }
-    }
-
-    private fun LocalDate.toCalendarDate(): CalendarDate {
-        return CalendarDate(
-            year = year,
-            month = monthValue,
-            day = dayOfMonth,
-            dayOfWeek = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-        )
-    }
-}
-
-data class CalendarDate(
-    val year: Int,
-    val month: Int,
-    val day: Int,
-    val dayOfWeek: String
-)
-
-data class DateIndex(
-    val month: Int,
-    val week: Int,
-    val day: Int
-) {
-    val isSelected: Boolean
-        get() = month != NOT_SELECTED && week != NOT_SELECTED && day != NOT_SELECTED
-
-    companion object {
-        private const val NOT_SELECTED = -1
-
-        fun none() = DateIndex(NOT_SELECTED, NOT_SELECTED, NOT_SELECTED)
-
-        fun of(month: Int, week: Int, day: Int) = DateIndex(month, week, day)
     }
 }

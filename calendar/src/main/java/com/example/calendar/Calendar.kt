@@ -1,5 +1,6 @@
 package com.example.calendar
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,17 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import com.example.calendar.CalendarState.Companion.rememberCalendarState
+import java.time.LocalDate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
     pageCount: Int = 12,
-    onSelect: (CalendarDate) -> Unit
+    onSelect: (LocalDate) -> Unit
 ) {
     val calendarState = rememberCalendarState()
     val value by calendarState.value
     val pagerState = rememberPagerState { pageCount }
+
+    Log.e("123", "$value")
 
     Column(
         modifier
