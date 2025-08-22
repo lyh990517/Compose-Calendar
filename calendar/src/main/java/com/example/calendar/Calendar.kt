@@ -44,11 +44,7 @@ fun Calendar(
                     .weight(1f)
             )
 
-            Controller(
-                onPrevious = calendarState::onPrevious,
-                onNext = calendarState::onNext,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Controller(modifier = Modifier.fillMaxWidth())
         }
     }
 }

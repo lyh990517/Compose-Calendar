@@ -11,20 +11,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.calendar.LocalCalendarState
 
 @Composable
 fun Controller(
-    onNext: () -> Unit,
-    onPrevious: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val calendarState = LocalCalendarState.current
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            modifier = Modifier.clickable(onClick = onPrevious),
+            modifier = Modifier.clickable(onClick = calendarState::onPrevious),
             text = "prev",
             fontSize = 20.sp
         )
@@ -32,7 +33,7 @@ fun Controller(
         Spacer(Modifier.width(12.dp))
 
         Text(
-            modifier = Modifier.clickable(onClick = onNext),
+            modifier = Modifier.clickable(onClick = calendarState::onNext),
             text = "next",
             fontSize = 20.sp
         )
