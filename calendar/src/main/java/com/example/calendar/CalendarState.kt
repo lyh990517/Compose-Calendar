@@ -21,7 +21,7 @@ class CalendarState {
             initialValue = Month(),
             key1 = page
         ) {
-            value = Month.generate(page)
+            value = Month.create(page)
         }
 
     fun loadNext() {
@@ -42,11 +42,18 @@ data class Month(
     val weeks: List<Week> = emptyList()
 ) {
     companion object {
-        fun generate(page: Int): Month {
+        private const val WEEKS_IN_MONTH = 5
+
+        fun create(page: Int): Month {
             val currentDate = LocalDate.now().plusMonths(page.toLong())
 
             return Month(
-                weeks = Week.createWeeks(currentDate.year, currentDate.monthValue)
+                weeks = List(WEEKS_IN_MONTH) { week ->
+                    Week.create(
+                        currentDate = currentDate,
+                        week = week,
+                    )
+                }
             )
         }
     }
@@ -56,39 +63,18 @@ data class Week(
     val days: List<LocalDate>
 ) {
     companion object {
-        private const val WEEKS_IN_MONTH = 5
         private const val DAYS_IN_WEEK = 7
 
-        fun createWeeks(year: Int, month: Int): List<Week> {
-            val firstDayOfMonth = YearMonth.of(year, month).atDay(1)
-            val startOfWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
+        fun create(
+            currentDate: LocalDate,
+            week: Int,
+        ): Week = Week(
+            days = List(DAYS_IN_WEEK) { day ->
+                val firstDayOfMonth = YearMonth.of(currentDate.year, currentDate.monthValue).atDay(1)
+                val startOfWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
 
-            return List(WEEKS_IN_MONTH) { week ->
-                Week(
-                    days = List(DAYS_IN_WEEK) { day ->
-                        val currentDate = startOfWeek.plusDays((week * DAYS_IN_WEEK + day).toLong())
-
-                        if (shouldIncludeDate(date = currentDate, targetMonth = month)) {
-                            currentDate
-                        } else {
-                            LocalDate.of(1970, 1, 1)
-                        }
-                    }
-                )
+                startOfWeek.plusDays((week * DAYS_IN_WEEK + day).toLong())
             }
-        }
-
-        private fun shouldIncludeDate(
-            date: LocalDate,
-            targetMonth: Int
-        ): Boolean {
-            return when (date.monthValue) {
-                targetMonth -> true
-                targetMonth - 1, targetMonth + 1 -> true
-                12 -> targetMonth == 1
-                1 -> targetMonth == 12
-                else -> false
-            }
-        }
+        )
     }
 }
