@@ -1,4 +1,4 @@
-package com.example.calendar
+package com.example.calendar.model
 
 import java.time.DayOfWeek
 import java.time.LocalDate

@@ -1,4 +1,4 @@
-package com.example.calendar
+package com.example.calendar.model
 
 import java.time.LocalDate
 
@@ -6,16 +6,15 @@ data class Week(
     val days: List<Day>
 ) {
     companion object {
-        private const val DAYS_IN_WEEK = 7
-
         fun create(
+            daysInWeek: Int,
             currentDate: LocalDate,
             rowIndex: Int,
         ): Week = Week(
-            days = List(DAYS_IN_WEEK) { columnIndex ->
+            days = List(daysInWeek) { columnIndex ->
                 Day.create(
                     currentDate = currentDate,
-                    daysInWeek = DAYS_IN_WEEK,
+                    daysInWeek = daysInWeek,
                     rowIndex = rowIndex,
                     columnIndex = columnIndex
                 )

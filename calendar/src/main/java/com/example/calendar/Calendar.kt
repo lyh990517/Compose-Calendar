@@ -8,21 +8,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.calendar.CalendarState.Companion.rememberCalendarState
+import com.example.calendar.ui.Month
 import java.time.LocalDate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
-    onSelect: (LocalDate) -> Unit
+    calendarState: CalendarState = rememberCalendarState(),
+    onSelect: (LocalDate) -> Unit = {}
 ) {
-    val calendarState = rememberCalendarState()
-    val value by calendarState.value
-
     Column(
         modifier = modifier,
     ) {
@@ -32,18 +30,23 @@ fun Calendar(
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
-                onClick = { calendarState.loadPrevious() }
+                onClick = calendarState::loadPrevious
             ) {
-                Text("prev")
+                Text(text = "prev")
             }
 
             Button(
-                onClick = { calendarState.loadNext() }
+                onClick = calendarState::loadNext
             ) {
-                Text("next")
+                Text(text = "next")
             }
         }
 
-        Text("$value")
+        Month(
+            month = calendarState.value,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        )
     }
 }
