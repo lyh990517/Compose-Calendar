@@ -7,10 +7,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import com.example.calendar.CalendarState.Companion.rememberCalendarState
 
@@ -21,8 +19,6 @@ fun Calendar(
     pageCount: Int = 12,
     onSelect: (CalendarDate) -> Unit
 ) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val calendarState = rememberCalendarState()
     val value by calendarState.value
     val pagerState = rememberPagerState { pageCount }
