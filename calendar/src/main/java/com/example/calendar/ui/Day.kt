@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.example.calendar.model.Day
 
 @Composable
-fun Day(
+internal fun Day(
     day: Day,
     modifier: Modifier = Modifier,
 ) {

@@ -13,7 +13,7 @@ import com.example.calendar.model.Week
 import java.time.LocalDate
 
 @Composable
-fun Week(
+internal fun Week(
     week: Week,
     onSelect: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,

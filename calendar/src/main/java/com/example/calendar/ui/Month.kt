@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.example.calendar.CalendarState
 
 @Composable
-fun Month(
+internal fun Month(
     calendarState: CalendarState,
     modifier: Modifier = Modifier,
 ) {

@@ -12,7 +12,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun DaysOfWeek(
+internal fun DaysOfWeek(
     modifier: Modifier = Modifier
 ) {
     val configuration = LocalConfiguration.current
