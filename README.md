@@ -1,16 +1,13 @@
 # Compose Calendar
-<img src="https://github.com/lyh990517/compose-calendar/assets/45873564/d5ea635c-87db-40d7-96c0-cce64a11f2f3" width="300">
-
-<img src="https://github.com/lyh990517/Compose-Calendar-Template/assets/45873564/6cdfaeeb-b016-41b5-aa81-97fe46bc6272" width="300">
-
-
 
 ## Overview
-Compose Calendar is a sample calendar component built using Jetpack Compose for Android. It provides a customizable calendar view with various features. I encourage you to ⭐star⭐ this repository if you find it useful!
+
+Compose Calendar is a simple and customizable calendar component built using Jetpack Compose for
+Android. It provides an easy-to-use calendar view with month navigation and date selection
+capabilities. I encourage you to ⭐star⭐ this repository if you find it useful!
 
 ## Quick Start
 [![](https://jitpack.io/v/lyh990517/Compose-Calendar-Template.svg)](https://jitpack.io/#lyh990517/Compose-Calendar-Template)
-<br>
 
 If you're using **Groovy DSL**, 
 
@@ -29,8 +26,6 @@ dependencies {
 }
 ```
 
-<br>
-
 If you're using **Kotlin DSL**
 ```kotlin
 //settings.gradle.kts
@@ -44,34 +39,47 @@ dependencyResolutionManagement {
 }
 //app.gradle.kts
 dependencies {
-    implementation ("com.github.lyh990517:Compose-Calendar-Template:latest-release")
+    implementation("com.github.lyh990517:Compose-Calendar-Template:latest-release")
 }
 ```
 
 ## How to Use
-To use Compose Calendar in your Android app, follow these steps:
 
-1. Add Compose Calendar as a dependency in your project.
-2. Include the `Calendar` composable in your layout.
-3. Customize the calendar appearance and behavior as needed.
-4. Handle the `onSelect` callback to respond to date selection events.
+### Basic
+```kotlin
+@Composable
+fun BasicCalendar() {
+    val calendarState = rememberCalendarState()
 
-## Customization
-You can customize Compose Calendar in various ways, such as changing the colors, specifying the number of months to display, and adjusting the layout. Refer to the documentation and source code for more details on customization options.
+    // Listen to date selection
+    LaunchedEffect(calendarState.selectedDate) {
+        calendarState.selectedDate?.let { selectedDate ->
+            // Handle selected date
+            println("Selected date: $selectedDate")
+        }
+    }
 
-## Usage Examples
-Here's an example of how to use Compose Calendar in your Android app:
+    Calendar(
+        calendarState = calendarState,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+    )
+}
+```
+
+### Customization
 
 ```kotlin
-Calendar { selectedDate ->
-    // Handle selected date here
-    Toast.makeText(this, "$selectedDate", Toast.LENGTH_SHORT).show()
+@Composable
+fun CustomCalendar() {
+    val calendarState = rememberCalendarState(
+        weekInMonth = 5,  // Number of weeks to display
+        daysInWeek = 7    // Number of days per week
+    )
+    
+    // Create your own UI using CalendarState.value
 }
-
-HorizontalCalendar { selectedDate ->
-    // Handle selected date here
-    Toast.makeText(this, "$selectedDate", Toast.LENGTH_SHORT).show()
-} 
 ```
 
 ## Contact
