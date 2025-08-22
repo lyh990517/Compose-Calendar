@@ -41,7 +41,7 @@ fun Calendar(
             calendarState = calendarState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .weight(1f)
         )
 
         Controller(
