@@ -6,13 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.calendar"
-    compileSdk = 34
+    compileSdk = 36
     publishing {
         singleVariant("release")
     }
     defaultConfig {
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -52,7 +51,7 @@ android {
 dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0")
-    testImplementation ("androidx.compose.ui:ui-test-junit4:1.6.0")
+    testImplementation("androidx.compose.ui:ui-test-junit4:1.6.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
