@@ -6,7 +6,7 @@ import java.time.YearMonth
 import java.time.temporal.TemporalAdjusters
 
 data class Day(
-    val day: LocalDate
+    val date: LocalDate
 ) {
     companion object {
         fun create(
@@ -19,7 +19,7 @@ data class Day(
             val startOfWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
 
             return Day(
-                day = startOfWeek.plusDays((rowIndex * daysInWeek + columnIndex).toLong())
+                date = startOfWeek.plusDays((rowIndex * daysInWeek + columnIndex).toLong())
             )
         }
     }

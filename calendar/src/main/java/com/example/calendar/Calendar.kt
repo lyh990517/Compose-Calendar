@@ -1,16 +1,16 @@
 package com.example.calendar
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import com.example.calendar.CalendarState.Companion.rememberCalendarState
 import java.time.LocalDate
 
@@ -18,25 +18,32 @@ import java.time.LocalDate
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
-    pageCount: Int = 12,
     onSelect: (LocalDate) -> Unit
 ) {
     val calendarState = rememberCalendarState()
     val value by calendarState.value
-    val pagerState = rememberPagerState { pageCount }
-
-    Log.e("123", "$value")
 
     Column(
-        modifier
-            .background(Color.White)
+        modifier = modifier,
     ) {
-        HorizontalPager(
-            modifier = modifier
-                .weight(1f)
-                .testTag("pager"), state = pagerState
-        ) { page ->
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = { calendarState.loadPrevious() }
+            ) {
+                Text("prev")
+            }
 
+            Button(
+                onClick = { calendarState.loadNext() }
+            ) {
+                Text("next")
+            }
         }
+
+        Text("$value")
     }
 }
