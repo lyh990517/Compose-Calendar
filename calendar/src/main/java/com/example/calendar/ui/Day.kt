@@ -1,10 +1,12 @@
 package com.example.calendar.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.calendar.model.Day
 
 @Composable
@@ -13,7 +15,7 @@ fun Day(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier,
+        modifier = modifier.size(32.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(text = day.date.dayOfMonth.toString())

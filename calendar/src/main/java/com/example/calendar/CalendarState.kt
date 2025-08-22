@@ -4,9 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.calendar.model.Month
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Stable
 class CalendarState(
@@ -21,14 +24,28 @@ class CalendarState(
                 daysInWeek = daysInWeek
             )
         }
+    val displayedDateText: String
+        @Composable get() = remember(page) {
+            val currentDate = LocalDate.now().plusMonths(page.toLong())
+            val formatter = DateTimeFormatter.ofPattern("yyyy.MM")
+
+            currentDate.format(formatter)
+        }
+
     var page by mutableIntStateOf(0)
         private set
+    var selectedDate by mutableStateOf<LocalDate?>(null)
+        private set
 
-    fun loadNext() {
+    fun onSelect(localDate: LocalDate) {
+        selectedDate = localDate
+    }
+
+    fun onNext() {
         page++
     }
 
-    fun loadPrevious() {
+    fun onPrevious() {
         page--
     }
 

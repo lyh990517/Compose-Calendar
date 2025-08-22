@@ -5,13 +5,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.calendar.model.Month
+import com.example.calendar.CalendarState
 
 @Composable
 fun Month(
-    month: Month,
+    calendarState: CalendarState,
     modifier: Modifier = Modifier,
 ) {
+    val month = calendarState.value
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -19,6 +21,7 @@ fun Month(
         month.weeks.forEach { week ->
             Week(
                 week = week,
+                onSelect = calendarState::onSelect,
                 modifier = Modifier.fillMaxWidth()
             )
         }
