@@ -1,4 +1,5 @@
 # Compose Calendar
+<img width="330" height="287" alt="스크린샷 2025-08-23 오전 2 14 25" src="https://github.com/user-attachments/assets/dbe5e6de-9f2f-427f-bf9f-384032f76700" />
 
 ## Overview
 
