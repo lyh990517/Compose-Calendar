@@ -14,7 +14,8 @@ import com.example.calendar.CalendarState
 
 @Composable
 fun Controller(
-    calendarState: CalendarState,
+    onNext: () -> Unit,
+    onPrevious: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -23,7 +24,7 @@ fun Controller(
         horizontalArrangement = Arrangement.Center
     ) {
         Button(
-            onClick = calendarState::onPrevious
+            onClick = onPrevious
         ) {
             Text(text = "prev")
         }
@@ -31,7 +32,7 @@ fun Controller(
         Spacer(Modifier.width(12.dp))
 
         Button(
-            onClick = calendarState::onNext
+            onClick = onNext
         ) {
             Text(text = "next")
         }

@@ -5,16 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.calendar.CalendarState.Companion.rememberCalendarState
 import com.example.calendar.ui.Controller
 import com.example.calendar.ui.DaysOfWeek
+import com.example.calendar.ui.DisplayedDate
 import com.example.calendar.ui.Month
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -27,11 +25,7 @@ fun Calendar(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = calendarState.displayedDateText,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold
-        )
+        DisplayedDate(calendarState = calendarState)
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -45,7 +39,8 @@ fun Calendar(
         )
 
         Controller(
-            calendarState = calendarState,
+            onPrevious = calendarState::onPrevious,
+            onNext = calendarState::onNext,
             modifier = Modifier.fillMaxWidth()
         )
     }
