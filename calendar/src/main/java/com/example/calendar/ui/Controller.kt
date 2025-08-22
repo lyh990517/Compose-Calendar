@@ -1,15 +1,16 @@
 package com.example.calendar.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun Controller(
@@ -22,18 +23,18 @@ fun Controller(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        Button(
-            onClick = onPrevious
-        ) {
-            Text(text = "prev")
-        }
+        Text(
+            modifier = Modifier.clickable(onClick = onPrevious),
+            text = "prev",
+            fontSize = 20.sp
+        )
 
         Spacer(Modifier.width(12.dp))
 
-        Button(
-            onClick = onNext
-        ) {
-            Text(text = "next")
-        }
+        Text(
+            modifier = Modifier.clickable(onClick = onNext),
+            text = "next",
+            fontSize = 20.sp
+        )
     }
 }
