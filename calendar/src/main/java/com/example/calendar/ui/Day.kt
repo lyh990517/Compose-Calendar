@@ -21,8 +21,9 @@ internal fun Day(
     modifier: Modifier = Modifier,
 ) {
     val calendarState = LocalCalendarState.current
-    val textColor = remember(calendarState.currentDate) {
-        if (calendarState.currentDate.contains(day)) {
+    val currentMonth = calendarState.currentDate
+    val textColor = remember(currentMonth) {
+        if (currentMonth.contains(day)) {
             Color.Black
         } else {
             Color.LightGray
