@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -34,11 +33,6 @@ fun Calendar(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val pagerState = rememberPagerState(
-                initialPage = Int.MAX_VALUE / 2,
-                pageCount = { Int.MAX_VALUE }
-            )
-
             DisplayedDate()
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -46,13 +40,10 @@ fun Calendar(
             DaysOfWeek(modifier = Modifier.fillMaxWidth())
 
             HorizontalPager(
-                state = pagerState
+                state = calendarState.pagerState
             ) { page ->
-                val monthOffset = page - Int.MAX_VALUE / 2
-                val month = calendarState.getMonth(monthOffset)
-
                 Month(
-                    month = month,
+                    month = calendarState.getPage(page),
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
@@ -60,7 +51,6 @@ fun Calendar(
             }
 
             Controller(
-                pagerState = pagerState,
                 modifier = Modifier.fillMaxWidth()
             )
         }

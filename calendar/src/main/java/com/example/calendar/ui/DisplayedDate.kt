@@ -23,7 +23,7 @@ fun DisplayedDate(
 
     Text(
         modifier = modifier,
-        text = calendarState.displayedDateText,
+        text = calendarState.getDisplayedDateText(),
         fontSize = 24.sp,
         fontWeight = FontWeight.SemiBold
     )
