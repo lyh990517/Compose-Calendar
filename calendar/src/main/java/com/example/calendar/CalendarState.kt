@@ -16,22 +16,17 @@ class CalendarState(
     private val weekInMonth: Int,
     private val daysInWeek: Int,
 ) {
-    val value
-        @Composable
-        get() = remember(page) {
-            Month.create(
-                page = page,
-                weekInMonth = weekInMonth,
-                daysInWeek = daysInWeek
-            )
-        }
-
-    val currentDate: LocalDate @Composable get() = remember(page) { LocalDate.now().plusMonths(page.toLong()) }
-    val displayedDateText: String @Composable get() = currentDate.format(DateTimeFormatter.ofPattern("yyyy.MM"))
-    var page by mutableIntStateOf(0)
+    val displayedDateText: String get() = LocalDate.now().plusMonths((page - (Int.MAX_VALUE / 2)).toLong()).format(DateTimeFormatter.ofPattern("yyyy.MM"))
+    var page by mutableIntStateOf(Int.MAX_VALUE / 2)
         private set
     var selectedDate by mutableStateOf<LocalDate?>(null)
         private set
+
+    fun getMonth(offset: Int) = Month.create(
+        page = offset,
+        weekInMonth = weekInMonth,
+        daysInWeek = daysInWeek
+    )
 
     fun onSelect(localDate: LocalDate) {
         selectedDate = localDate

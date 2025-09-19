@@ -11,18 +11,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.calendar.LocalCalendarState
 import com.example.calendar.extension.contains
 import com.example.calendar.model.Day
+import java.time.LocalDate
 
 @Composable
 internal fun Day(
     day: Day,
     modifier: Modifier = Modifier,
 ) {
-    val calendarState = LocalCalendarState.current
-    val currentMonth = calendarState.currentDate
-    val textColor = remember(currentMonth) {
+    val currentMonth = LocalDate.now()
+    val textColor = remember {
         if (currentMonth.contains(day)) {
             Color.Black
         } else {
