@@ -7,9 +7,14 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.calendar.model.Day
 import com.example.calendar.model.Month
+import com.example.calendar.model.Week
+import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalAdjusters
 
 @Stable
 class CalendarState(
@@ -22,7 +27,7 @@ class CalendarState(
     var selectedDate by mutableStateOf<LocalDate?>(null)
         private set
 
-    fun getMonth(offset: Int) = Month.create(
+    fun getMonth(offset: Int) = createMonth(
         page = offset,
         weekInMonth = weekInMonth,
         daysInWeek = daysInWeek
@@ -38,6 +43,53 @@ class CalendarState(
 
     fun onPrevious() {
         page--
+    }
+
+    private fun createMonth(
+        page: Int,
+        weekInMonth: Int,
+        daysInWeek: Int,
+    ): Month {
+        val currentDate = LocalDate.now().plusMonths(page.toLong())
+
+        return Month(
+            weeks = List(weekInMonth) { rowIndex ->
+                createWeek(
+                    currentDate = currentDate,
+                    daysInWeek = daysInWeek,
+                    rowIndex = rowIndex,
+                )
+            }
+        )
+    }
+
+    private fun createWeek(
+        currentDate: LocalDate,
+        daysInWeek: Int,
+        rowIndex: Int,
+    ): Week = Week(
+        days = List(daysInWeek) { columnIndex ->
+            createDay(
+                currentDate = currentDate,
+                daysInWeek = daysInWeek,
+                rowIndex = rowIndex,
+                columnIndex = columnIndex
+            )
+        }
+    )
+
+    private fun createDay(
+        currentDate: LocalDate,
+        daysInWeek: Int,
+        rowIndex: Int,
+        columnIndex: Int,
+    ): Day {
+        val firstDayOfMonth = YearMonth.of(currentDate.year, currentDate.monthValue).atDay(1)
+        val startOfWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY))
+
+        return Day(
+            date = startOfWeek.plusDays((rowIndex * daysInWeek + columnIndex).toLong())
+        )
     }
 
     companion object {
